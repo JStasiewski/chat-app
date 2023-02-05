@@ -1,0 +1,85 @@
+@keyframes neon{
+    from {
+        text-shadow:
+        0 0 4px #fff,
+        0 0 10px #fff,
+        0 0 30px #ff319b,
+        0 0 50px #ff319b,
+        0 0 70px #ff319b,
+        0 0 90px #ff319b;
+    }
+    to {
+        text-shadow:
+        0 0 4px #fff,
+        0 0 8px #fff,
+        0 0 15px #ff319b,
+        0 0 25px #ff319b,
+        0 0 35px #ff319b,
+        0 0 45px #ff319b;
+    }
+}
+
+@font-face{
+    font-family: "neonfont";
+    src: url(./fonts/AlexBrush-Regular.ttf);
+}
+
+@font-face{
+    font-family: "roboto";
+    src: url(./fonts/RobotoCondensed-Regular.ttf);
+}
+
+body{
+    margin: 0;
+}
+
+.formContainer{
+    background-image: url(./photos/backgroung.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .formWrapper{
+        background-color: rgb(36, 36, 36);
+        padding: 20px 60px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        color: white;
+        font-family: "roboto";
+        text-shadow: 2px 2px 3px black;
+
+        .logo{
+            font-size: 38px;
+            font-family: "neonfont";
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+
+        .title{
+            font-size: 16px;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap:15px;
+
+            input{
+                background-color: rgb(36, 36, 36);
+                padding: 15px;
+                border:none;
+                border-bottom: 1px solid black;
+                &::placeholder{
+                    color: rgb(120, 120, 120);
+                }
+            }
+        }
+    }
+    
+}
