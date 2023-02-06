@@ -1,25 +1,46 @@
-@keyframes neon{
+:root {
+    --neon-color: #bc13fe;
+}
+
+@keyframes neonText{
     0%, 19%, 54%, 100%{
         text-shadow:
         0 0 4px #fff,
         0 0 10px #fff,
-        0 0 30px #3d40ff,
-        0 0 50px #3d40ff,
-        0 0 70px #3d40ff,
-        0 0 90px #3d40ff;
+        0 0 30px var(--neon-color),
+        0 0 50px var(--neon-color),
+        0 0 70px var(--neon-color),
+        0 0 90px var(--neon-color);
     }
     21%, 26%, 56% {
         text-shadow:
         0 0 4px #fff,
         0 0 8px #fff,
-        0 0 15px #3d40ff,
-        0 0 25px #3d40ff,
-        0 0 35px #3d40ff,
-        0 0 45px #3d40ff;
+        0 0 15px var(--neon-color),
+        0 0 25px var(--neon-color),
+        0 0 35px var(--neon-color),
+        0 0 45px var(--neon-color);
     }
-        20%, 24%, 55% {        
-            text-shadow: none;
-        } 
+    20%, 24%, 55% {        
+        text-shadow: none;
+    } 
+}
+
+@keyframes neonBox {
+    50%  {
+        box-shadow: 
+        0 0 .2rem #fff,
+        0 0 .2rem #fff,
+        0 0 1.6rem #bc13fe,
+        // inset 0 0 .1rem #bc13fe;
+    }
+    0%,100%{
+        box-shadow: 
+        0 0 .2rem #fff,
+        0 0 .3rem #fff,
+        0 0 2.2rem #bc13fe,
+        // inset 0 0 .3rem #bc13fe;
+    }
 }
 
 @font-face{
@@ -58,11 +79,12 @@ body{
         font-family: "roboto";
         text-shadow: 3px 3px 3px black;
         width: 400px;
+        animation: neonBox 2s infinite alternate;
 
         .logo{
             font-size: 48px;
             font-family: "neonfont";
-            animation: neon 2s infinite alternate;
+            animation: neonText 2.8s infinite alternate;
             user-select: none;
         }
 
@@ -123,10 +145,13 @@ body{
     align-items: center;
     justify-content: center;
 
+
     .container {
         width: 65%;
         height: 80%;
         display: flex;
+        border-radius: 10px;
+        animation: neonBox 2s infinite alternate;
 
         .sidebar {
             // flex:1;
@@ -151,7 +176,7 @@ body{
                     font-size: 28px;
                     font-family: "neonfont";
                     white-space: nowrap;
-                    animation: neon 2s ease-in-out infinite alternate;
+                    animation: neonText 2s ease-in-out infinite alternate;
                     user-select: none;
                 }
 
@@ -222,7 +247,7 @@ body{
             }
 
             .userChat{
-                width: 88%;
+                width: 92%;
                 margin: 0px;
                 padding: 10px 4% 10px 4%;
                 display: flex;
@@ -233,7 +258,8 @@ body{
                 cursor: pointer;
 
                 &:hover{
-                    background-color: rgb(40, 40, 40);
+                    // background-color: rgb(40, 40, 40);
+                    background-color: rgb(25 25 25);
                     transition-duration: .5s;
                 }
                 img {
