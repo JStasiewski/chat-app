@@ -1,9 +1,13 @@
+import { ref, uploadBytesResumable } from "firebase/storage";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth , storage } from "../firebase";
 import React from 'react'
 import avatar from '../photos/avatar.png'
 import {Link} from 'react-router-dom'
 import { useState } from "react";
+import { async } from "@firebase/util";
+
+
 
 
 const Register = () => {
@@ -15,10 +19,11 @@ const Register = () => {
     "Fill Display Name",
     "Fill Email",
     "Fill Password",
-    "Email already in use"
+    "Not existing email or already in use",
+    "File Error"
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target[0].value;
     const email = e.target[1].value;
@@ -29,21 +34,16 @@ const Register = () => {
     if(email=="") {setErr(2); return false};
     if(password=="") {setErr(3); return false};
 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log(user);
-      setErr(false);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      errList[4] = errorMessage;
-      console.log(errList[4]);
-      setErr(4);
-    });
+    try{
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const storageRef = ref(storage, name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      setErr(0);
+    } catch(err){
+        setErr(4);
+    }
   }
 
   return (
