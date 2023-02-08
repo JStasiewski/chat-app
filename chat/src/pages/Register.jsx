@@ -18,7 +18,8 @@ const Register = () => {
     "Fill Email",
     "Fill Password",
     "Not existing email or already in use",
-    "File Error"
+    "File Error",
+    "No Photo included"
   ]
 
   const handleSubmit = async (e) => {
@@ -31,6 +32,7 @@ const Register = () => {
     if(displayName=="") {setErr(1); return false};
     if(email=="") {setErr(2); return false};
     if(password=="") {setErr(3); return false};
+    if(file == null) {setErr(6); return false};
 
     try{
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -75,7 +77,7 @@ const Register = () => {
           <input type='email'placeholder='email' style={{boxShadow: err===2 ? "inset 0px 0px 10px red":""}}/>
           <input type='password' placeholder='password' minLength={6} style={{boxShadow: err===3 ? "inset 0px 0px 10px red":""}}/>
           <input style={{display:"none"}}type='file' id='file'/>
-          <label htmlFor="file">
+          <label style={{boxShadow: err===6 ? "inset 0px 0px 10px red":""}} htmlFor="file">
             <img src={avatar} alt="avatar file"/>
             <span>Chose your avatar</span>
             </label>
