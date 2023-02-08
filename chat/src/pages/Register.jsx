@@ -1,13 +1,11 @@
-import { ref, uploadBytesResumable } from "firebase/storage";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth , storage } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth , storage, db} from "../firebase";
 import React from 'react'
 import avatar from '../photos/avatar.png'
 import {Link} from 'react-router-dom'
 import { useState } from "react";
-import { async } from "@firebase/util";
-
-
 
 
 const Register = () => {
@@ -25,20 +23,41 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = e.target[0].value;
+    const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
 
-    if(name=="") {setErr(1); return false};
+    if(displayName=="") {setErr(1); return false};
     if(email=="") {setErr(2); return false};
     if(password=="") {setErr(3); return false};
 
     try{
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(res.user);
 
-      const storageRef = ref(storage, name);
+      const storageRef = ref(storage, displayName);
       const uploadTask = uploadBytesResumable(storageRef, file);
+      
+      uploadTask.on(
+      (error) => {
+        setErr(5);
+      }, 
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) => {
+          await updateProfile(res.user,{
+            name: displayName,
+            photoURL: downloadURL,
+          });
+        
+          await setDoc(doc(db, "users", res.user.uid),{
+            uid: res.user.uid,
+            nick: displayName,
+            email: email,
+            photoURL: downloadURL,
+          });
+        });
+      });
 
       setErr(0);
     } catch(err){
