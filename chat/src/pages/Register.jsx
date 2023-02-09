@@ -4,13 +4,13 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth , storage, db} from "../firebase";
 import React from 'react'
 import avatar from '../photos/avatar.png'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { useState } from "react";
-
 
 const Register = () => {
 
   const [err, setErr] = useState(false);
+  const navigate =useNavigate();
   
   const errList = [
     "",
@@ -58,8 +58,8 @@ const Register = () => {
             email: email,
             photoURL: downloadURL,
           });
-
           await setDoc(doc(db,"userChats", res.user.uid),{});
+          navigate("/");
         });
       });
 
