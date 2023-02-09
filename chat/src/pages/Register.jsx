@@ -1,5 +1,5 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore"; 
 import { auth , storage, db} from "../firebase";
 import React from 'react'
@@ -7,10 +7,12 @@ import avatar from '../photos/avatar.png'
 import {Link, useNavigate} from 'react-router-dom'
 import { useState } from "react";
 
+
+
 const Register = () => {
 
   const [err, setErr] = useState(false);
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   
   const errList = [
     "",
@@ -59,7 +61,8 @@ const Register = () => {
             photoURL: downloadURL,
           });
           await setDoc(doc(db,"userChats", res.user.uid),{});
-          navigate("/");
+          await signOut(auth);
+          navigate("/login");
         });
       });
 

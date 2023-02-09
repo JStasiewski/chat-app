@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase"
+
 
 const Login = () => {
 
@@ -23,7 +26,9 @@ const Login = () => {
     if(password=="") {setErr(2); return false};
 
     try{
-      
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+      setErr(0);
     }catch (err){
       setErr(3);
     }
@@ -39,6 +44,7 @@ const Login = () => {
           <input type='password' placeholder='password' style={{boxShadow: err===2 ? "inset 0px 0px 10px red":""}}/>
           <button>Login</button>
         </form>
+        {err ? <span style={{display:"flex",justifyContent:"center",color:"red", }}>{errList[err]}</span> : <></>}
         <p>No account? <Link to="/register">Register here</Link></p>
       </div>
     </div>
