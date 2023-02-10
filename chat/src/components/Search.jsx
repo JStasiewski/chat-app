@@ -1,22 +1,14 @@
+import {collection , query , where , getDocs , doc , getDoc , setDoc , serverTimestamp , updateDoc } from "firebase/firestore";
+import { ChatContext } from "../context/ChatContext";
 import React, { useContext, useState } from "react";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-  setDoc,
-  serverTimestamp,
-  updateDoc
-} from "firebase/firestore";
-import { db } from "../firebase";
 import {AuthContext} from '../context/AuthContext'
+import { db } from "../firebase";
 
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
+  const {dispatch} = useContext(ChatContext);
 
   const {currentUser} = useContext(AuthContext);
 
@@ -38,7 +30,7 @@ const Search = () => {
     e.code === "Enter" && handleSearch();
   }
 
-  const handleSelect = async () => {
+  const handleSelect = async (u) => {
     const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
     
     try{
@@ -66,8 +58,9 @@ const Search = () => {
       }
     } catch(err) {}
     
-      setUser(null);
+    setUser(null);
     setUsername("");
+    dispatch({type:"CHANGE_USER", payload: u })
   }
 
   return (
@@ -76,7 +69,7 @@ const Search = () => {
         <input type="text" placeholder='find friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)} value={username}/>
       </div>
       {err && <span>User not found</span>}
-      {user && (<div className='userChat' onClick={handleSelect}>
+      {user && (<div className='userChat' onClick={() => handleSelect(user)}>
         <img src={user.photoURL} alt="user search" />
         <span>{user.displayName}</span>
       </div>)}
