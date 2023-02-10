@@ -64,15 +64,16 @@ const Search = () => {
           [combinedId+".date"]: serverTimestamp()
         });
       }
-    } catch(err) {
-
-    }
+    } catch(err) {}
+    
+      setUser(null);
+    setUsername("");
   }
 
   return (
     <div className='search'>
       <div className='searchForm'>
-        <input type="text" placeholder='find friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)}/>
+        <input type="text" placeholder='find friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)} value={username}/>
       </div>
       {err && <span>User not found</span>}
       {user && (<div className='userChat' onClick={handleSelect}>
