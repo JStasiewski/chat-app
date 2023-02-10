@@ -309,12 +309,31 @@ body{
                 padding: 10px 0px 10px 0px;
             }
 
-            .massages {
+            .messages {
                 padding: 10px;
                 height: calc(100% - 170px);
-                color: #fff;
-                font-family: 'roboto';
-                font-size: 18px;
+
+                .message{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    .messageInfo{
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                    .messageContent{
+                        p {
+                            color: #fff;
+                            font-size: larger;
+                            font-family: "roboto";
+                        }
+                    }
+                }
             }
 
             .input {
