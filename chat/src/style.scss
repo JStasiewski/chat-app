@@ -291,9 +291,82 @@ body{
         .chat{
             // flex:2;
             width: 65%;
-            background-color: rgb(36, 36, 36);
+            background-color: rgb(40, 40, 40);
             border-bottom-right-radius: 10px;
             border-top-right-radius: 10px;
+
+            .chatInfo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: "roboto";
+                font-size: 24px;
+                color: #fff;
+                background-color: rgb(26, 26, 26);
+                text-shadow: 1px 1px 10px black;
+                border-top-right-radius: 10px;
+                height: 60px;
+                padding: 10px 0px 10px 0px;
+            }
+
+            .massages {
+                padding: 10px;
+                height: calc(100% - 170px);
+                color: #fff;
+                font-family: 'roboto';
+                font-size: 18px;
+            }
+
+            .input {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 50px;
+                padding: 10px;
+                background-color: rgb(26, 26, 26);
+                border-bottom-right-radius: 10px;
+
+                input {
+                    width:70%;
+                    border-bottom-left-radius: 20px;
+                    border-top-left-radius: 20px;
+                    padding: 10px;
+                    font-size: 20px;
+                    border: none;
+                    outline: none;
+                }
+
+                .send {
+                    border-bottom-right-radius: 30px;
+                    border-top-right-radius: 30px;
+                    // background-color: #fff;
+                    height: 43px;
+                    border: none;
+                    outline: none;
+                    display: flex;
+                    align-items: flex-start;
+                    img {
+                        padding: 5px 10px 5px 10px;
+                        height: 33px;
+                        cursor: pointer;
+                        background-color: #fff;
+
+                    }
+                    button {
+                        border-bottom-right-radius: 30px;
+                        border-top-right-radius: 30px;
+                        padding: 10px 10px 10px;
+                        border: none;
+                        outline: none;
+                        height: 43px;
+                        color: #fff;
+                        font-family: "roboto";
+                        font-size: 18px;
+                        background-color: black;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 }
