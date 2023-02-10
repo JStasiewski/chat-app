@@ -27,11 +27,14 @@ const Input = () => {
         }, 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) => {
-            messages: arrayUnion({
-              id: uuid(),
-              text,
-              semderId: currentUser.uid,
-              date: Timestamp.now()
+            await updateDoc(doc((db),"chats", data.chatId),{
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL
+              })
             })
           });
         });
@@ -40,7 +43,7 @@ const Input = () => {
         messages: arrayUnion({
           id: uuid(),
           text,
-          semderId: currentUser.uid,
+          senderId: currentUser.uid,
           date: Timestamp.now()
         })
       })
