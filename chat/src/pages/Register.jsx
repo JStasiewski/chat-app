@@ -81,7 +81,7 @@ const Register = () => {
           <input type='text' placeholder='displat name' style={{boxShadow: err===1 ? "inset 0px 0px 10px red":""}}/>
           <input type='email'placeholder='email' style={{boxShadow: err===2 ? "inset 0px 0px 10px red":""}}/>
           <input type='password' placeholder='password' minLength={6} style={{boxShadow: err===3 ? "inset 0px 0px 10px red":""}}/>
-          <input style={{display:"none"}}type='file' id='file'/>
+          <input style={{display:"none"}}type='file' id='file' />
           <label style={{boxShadow: err===6 ? "inset 0px 0px 10px red":""}} htmlFor="file">
             <img src={avatar} alt="avatar file"/>
             <span>Chose your avatar</span>
