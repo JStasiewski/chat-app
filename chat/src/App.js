@@ -15,7 +15,7 @@ function App() {
         <Route path="/">
           <Route index element={
             // <ProtectRoute>
-              currentUser ? <Home /> : <Login/>
+              !currentUser ? <Login/> : <Home />
              // </ProtectRoute>
             }/>
           <Route path="login" element={<Login/>} />
