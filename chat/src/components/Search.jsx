@@ -8,7 +8,6 @@ const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
-  const {dispatch} = useContext(ChatContext);
 
   const {currentUser} = useContext(AuthContext);
 
@@ -30,7 +29,7 @@ const Search = () => {
     e.code === "Enter" && handleSearch();
   }
 
-  const handleSelect = async (u) => {
+  const handleSelect = async () => {
     const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
     
     try{
@@ -38,38 +37,37 @@ const Search = () => {
       if(!res.exists()){
         await setDoc(doc(db,"chats", combinedId), { messages: [] });
         
-        await updateDoc(doc(db,"userChats",currentUser.uid), {
-          [combinedId+".userInfo"]: {
-            uid:user.uid,
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
           },
-          [combinedId+".date"]: serverTimestamp()
+          [combinedId + ".date"]: serverTimestamp(),
         });
 
-        await updateDoc(doc(db,"userChats",currentUser.uid),{
-          [combinedId+".date"]: {
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL
+            photoURL: currentUser.photoURL,
           },
-          [combinedId+".date"]: serverTimestamp()
+          [combinedId + ".date"]: serverTimestamp(),
         });
       }
     } catch(err) {}
     
     setUser(null);
     setUsername("");
-    dispatch({type:"CHANGE_USER", payload: u })
   }
 
   return (
     <div className='search'>
       <div className='searchForm'>
-        <input type="text" placeholder='find friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)} value={username}/>
+        <input type="text" placeholder='find friend' onKeyDown={handleKey} onChange={(e)=>setUsername(e.target.value)} value={username}/>
       </div>
       {err && <span>User not found</span>}
-      {user && (<div className='userChat' onClick={() => handleSelect(user)}>
+      {user && (<div className='userChat' onClick={handleSelect}>
         <img src={user.photoURL} alt="user search" />
         <span>{user.displayName}</span>
       </div>)}
