@@ -7,6 +7,8 @@ const Message = ({ message }) => {
   const { data } = useContext(ChatContext);
 
   const ref = useRef();
+  const date = message.date.toDate();
+  const messageDate = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,11 +21,11 @@ const Message = ({ message }) => {
     >
       <div className="messageInfo">
         <img src={message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL} alt="" />
-        {/* <span>just now</span> */}
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
         {message.img && <img src={message.img} alt="" />}
+        <span>{messageDate}</span>
       </div>
     </div>
   );
